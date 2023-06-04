@@ -10,15 +10,15 @@ has the following folder structure:
 ├── build.zig           # `Zig` build configuration file
 ├── clang_build.sh      # Single `clang` build command
 ├── CMakeLists.txt      # `cmake` configuration file
-├── configure.sh        # Run `cmake` to configure
+├── configure.sh        # Configure `cmake`
 ├── run.sh              # Use `cmake` to build and run
 └── src
-     ├── main.cpp       # `main` cpp, inclue `liba.so` and `lib.so` header files
-     └── utils
-         ├── a.cpp      # `liba.so` source file
-         ├── a.h        # `liba.so` header file
-         ├── b.cpp      # `libb.so` source file
-         └── b.h        # `libb.so` header file
+     ├── main.cpp       # `main` cpp calls namespace functions in `liba.so` and `lib.so`
+     └── utils          # Lib `a` and `b`
+         ├── a.cpp
+         ├── a.h
+         ├── b.cpp
+         └── b.h
 ```
 
 </br>
@@ -35,7 +35,7 @@ and links it to the `build/liba.so`  and `build/libb.so`.
 
 </br>
 
-### Use `clang` command to build without `cmake`
+### Use `clang++` to build without `cmake`
 
 This only works once you build the project via `cmake`, as it doesn't build
 `liba.so` and `lib.so` but just links to them!!!
@@ -61,7 +61,7 @@ This only works once you build the project via `cmake`, as it doesn't build
 `liba.so` and `lib.so` but just links to them!!!
 
 ```bash
-clear && zig build run
+zig build run
 ```
 
 </br>
