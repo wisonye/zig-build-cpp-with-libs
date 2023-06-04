@@ -1,13 +1,17 @@
 const std = @import("std");
 
+///
+///
+///
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const exe = b.addExecutable(.{
-        .name = "temp",
-        // In this case the main source file is merely a path, however, in more
-        // complicated build scripts, this could be a generated file.
+    // -----------------------------------------------------------------------
+    // `cpp_temp` C++ binary without `main.zig`
+    // -----------------------------------------------------------------------
+    const cpp_temp = b.addExecutable(.{
+        .name = "cpp_temp",
         .root_source_file = null,
         .target = target,
         .optimize = optimize,
@@ -19,29 +23,50 @@ pub fn build(b: *std.Build) void {
         "-std=c++17",
         "-g",
     };
-    exe.addCSourceFile("src/main.cpp", &cflags);
+    cpp_temp.addCSourceFile("src/main.cpp", &cflags);
 
     // Extra include path
-    exe.addIncludePath("./src/utils");
+    cpp_temp.addIncludePath("./src/utils");
 
     // Link CPP
-    exe.linkLibCpp();
+    cpp_temp.linkLibCpp();
 
     // Library path
-    exe.addLibraryPath("./build");
+    cpp_temp.addLibraryPath("./build");
 
     // Link related libs
-    exe.linkSystemLibrary("a");
-    exe.linkSystemLibrary("b");
+    cpp_temp.linkSystemLibrary("a");
+    cpp_temp.linkSystemLibrary("b");
 
-    b.installArtifact(exe);
+    b.installArtifact(cpp_temp);
 
-    const run_cmd = b.addRunArtifact(exe);
+    const run_cmd = b.addRunArtifact(cpp_temp);
     run_cmd.step.dependOn(b.getInstallStep());
     if (b.args) |args| {
         run_cmd.addArgs(args);
     }
 
-    const run_step = b.step("run", "Run the app");
+    const run_step = b.step("run-cpp", "Run C++ binary");
     run_step.dependOn(&run_cmd.step);
+
+    // -----------------------------------------------------------------------
+    // `temp` zig binary
+    // -----------------------------------------------------------------------
+    const zig_temp = b.addExecutable(.{
+        .name = "zig_temp",
+        .root_source_file = .{ .path = "src/main.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
+
+    b.installArtifact(zig_temp);
+
+    const zig_run_cmd = b.addRunArtifact(zig_temp);
+    zig_run_cmd.step.dependOn(b.getInstallStep());
+    if (b.args) |args| {
+        zig_run_cmd.addArgs(args);
+    }
+
+    const zig_run_step = b.step("run-zig", "Run zig binary");
+    zig_run_step.dependOn(&zig_run_cmd.step);
 }
