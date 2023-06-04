@@ -1,7 +1,9 @@
 # C++ zig build demo
 
-This demo shows how to use `build.zig` to compile a `C++` project. The project
-has the following folder structure:
+This demo shows how to use `build.zig` to compile a `C++` project. It includes
+everything you need to know when dealing with a `C++` project with `Zig`.
+
+The project has the following folder structure:
 
 ```bash
 .
