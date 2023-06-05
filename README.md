@@ -4,6 +4,13 @@ This demo shows how to use `build.zig` to compile a `C++` project and call `C++`
 lib function in `Zig`. It includes everything you need to know about when dealing
 with a `C++` project with `Zig`.
 
+It's worth it to point out that `@cImport` and `@cInclude` only works for `C`
+headers, it doesn't work for `C++` header, that's why you have to write a wrapper
+header file if you want to include a `C++` lib header file!
+
+`src/utils/a.h` and `src/utils/b.h` mix the `C++` and wapper in the same header
+file, that's why it works.
+
 The project has the following folder structure:
 
 ```bash
