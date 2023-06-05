@@ -30,10 +30,6 @@ void print(Result &result);
 extern "C" {
 #endif
 
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
-
 void *BResult_init(float init_float);
 void BResult_free(void *self);
 float BResult_get_float_value(void *self);
