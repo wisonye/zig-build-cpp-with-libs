@@ -111,7 +111,7 @@ This only works once you build the project via `cmake`, as it doesn't build
 This only works once you build the project via `cmake`, as it doesn't build
 `liba.so` and `lib.so` but just links to them!!!
 
-- Build and pure C++ binary without zig
+- Build and run C++ binary (`zig-out/bin/cpp_binary`)
 
     ```bash
     zig build run-cpp
@@ -132,7 +132,7 @@ This only works once you build the project via `cmake`, as it doesn't build
 
     </br>
 
-- Build and run zig binary (call C++ function in zig)
+- Build and run zig binary (`zig-out/bin/zig_binary`)
 
     ```bash
     zig build run-zig
