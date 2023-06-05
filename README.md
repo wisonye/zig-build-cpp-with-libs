@@ -18,6 +18,7 @@ The project has the following folder structure:
 └── src
      ├── main.cpp       # `C++` calls namespace functions in `liba.so` and `lib.so`
      ├── main.c         # `C` calls namespace functions in `liba.so` and `lib.so`
+     ├── main.zip       # `Zip` calls namespace functions in `liba.so` and `lib.so`
      └── utils          # Lib `a` and `b`
          ├── a.cpp
          ├── a.h
@@ -30,31 +31,76 @@ The project has the following folder structure:
 `CMake` builds the `liba.so` and `lib.so` first, then builds the `cpp_temp`
 and links it to the `build/liba.so`  and `build/libb.so`.
 
-### Configure `cmake` and build
+### Use `cmake` to build and run
 
 ```bash
 ./configure.sh
+
 ./run.sh
+# >>> Simple zig build CPP demo.
+# >>> [ A - Result ] {
+# {
+#          invisible_value: 28
+#          is_success: true
+# }
+# >>> A::Result destroyed.
+# >>> [ B - Result ]
+# {
+#          invisible_float: 88.456
+# }
+# >>> B::Result destroye
 ```
 
 </br>
 
-### Use `clang++` to build without `cmake`
+### Use `clang++` to build and run
 
 This only works once you build the project via `cmake`, as it doesn't build
 `liba.so` and `lib.so` but just links to them!!!
 
 ```bash
-./build_cpp.sh
+./build_cpp.sh && LD_LIBRARY_PATH=./build ./build/cpp_2
+# >>> Simple zig build CPP demo.
+# >>> [ A - Result ] {
+# {
+#          invisible_value: 28
+#          is_success: true
+# }
+# >>> A::Result destroyed.
+# >>> [ B - Result ]
+# {
+#          invisible_float: 88.456
+# }
+# >>> B::Result destroye
 ```
 
 </br>
 
-After that, you can check it and run it like this:
+### Call `C++` lib function in `C`
+
+This only works once you build the project via `cmake`, as it doesn't build
+`liba.so` and `lib.so` but just links to them!!!
 
 ```bash
-LD_LIBRARY_PATH=./build ldd build/cpp_2
-LD_LIBRARY_PATH=./build ./build/cpp_2
+ ./build_c.sh && LD_LIBRARY_PATH=./build build/c
+
+# >>> Calling C++ lib function in C:)
+#
+# >>> a_result value: 38
+# >>> a_result is_success: true
+# >>> [ A - Result ] {
+# {
+#          invisible_value: 38
+#          is_success: true
+# }
+# >>> A::Result destroyed.
+#
+# >>> b_result value: 123.789
+# >>> [ B - Result ]
+# {
+#          invisible_float: 123.789
+# }
+# >>> B::Result destroyed.
 ```
 
 </br>
@@ -68,7 +114,7 @@ This only works once you build the project via `cmake`, as it doesn't build
 # Run CPP binary (pure C++ without zig)
 zig build run-cpp
 
-# Run ZIG binary (call C++ in zig)
+# Run ZIG binary (call C++ function in zig)
 zig build run-zig
 ```
 
