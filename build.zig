@@ -59,6 +59,26 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    // Extra include path
+    zig_binary.addIncludePath("./src/utils");
+
+    //
+    // Link CPP: This is very important, as `new` and `delete` only exists
+    // in `C++`. If you don't link (`-lstdc++`), then you will see the following
+    // error when running:
+    //
+    // Segmentation fault at address 0x0
+    // ???:?:?: 0x0 in ??? (???)
+    //
+    zig_binary.linkLibCpp();
+
+    // Library path
+    zig_binary.addLibraryPath("./build");
+
+    // Link related libs
+    zig_binary.linkSystemLibrary("a");
+    zig_binary.linkSystemLibrary("b");
+
     b.installArtifact(zig_binary);
 
     const zig_run_cmd = b.addRunArtifact(zig_binary);
