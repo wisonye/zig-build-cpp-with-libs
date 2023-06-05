@@ -1,7 +1,8 @@
 # C++ zig build demo
 
-This demo shows how to use `build.zig` to compile a `C++` project. It includes
-everything you need to know when dealing with a `C++` project with `Zig`.
+This demo shows how to use `build.zig` to compile a `C++` project and call `C++`
+lib function in `Zig`. It includes everything you need to know about when dealing
+with a `C++` project with `Zig`.
 
 The project has the following folder structure:
 
