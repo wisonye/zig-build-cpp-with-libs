@@ -10,12 +10,14 @@ The project has the following folder structure:
 ├── README.md
 ├── build               #`cmake` build folder
 ├── build.zig           # `Zig` build configuration file
-├── clang_build.sh      # Single `clang` build command
 ├── CMakeLists.txt      # `cmake` configuration file
 ├── configure.sh        # Configure `cmake`
-├── run.sh              # Use `cmake` to build and run
+├── run.sh              # Build `main.cpp` with `cmake` and run
+├── build_cpp.sh        # Build `main.cpp` with `clang++`
+├── build_c.sh          # Build `main.c` with `clang`
 └── src
-     ├── main.cpp       # `main` cpp calls namespace functions in `liba.so` and `lib.so`
+     ├── main.cpp       # `C++` calls namespace functions in `liba.so` and `lib.so`
+     ├── main.c         # `C` calls namespace functions in `liba.so` and `lib.so`
      └── utils          # Lib `a` and `b`
          ├── a.cpp
          ├── a.h
@@ -43,7 +45,7 @@ This only works once you build the project via `cmake`, as it doesn't build
 `liba.so` and `lib.so` but just links to them!!!
 
 ```bash
-./clang_build.sh
+./build_cpp.sh
 ```
 
 </br>
@@ -51,8 +53,8 @@ This only works once you build the project via `cmake`, as it doesn't build
 After that, you can check it and run it like this:
 
 ```bash
-LD_LIBRARY_PATH=./build ldd test
-LD_LIBRARY_PATH=./build ./test
+LD_LIBRARY_PATH=./build ldd build/cpp_2
+LD_LIBRARY_PATH=./build ./build/cpp_2
 ```
 
 </br>

@@ -8,10 +8,10 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     // -----------------------------------------------------------------------
-    // `cpp_temp` C++ binary without `main.zig`
+    // `cpp_binary` C++ binary without `main.zig`
     // -----------------------------------------------------------------------
-    const cpp_temp = b.addExecutable(.{
-        .name = "cpp_temp",
+    const cpp_binary = b.addExecutable(.{
+        .name = "cpp_binary",
         .root_source_file = null,
         .target = target,
         .optimize = optimize,
@@ -23,24 +23,24 @@ pub fn build(b: *std.Build) void {
         "-std=c++17",
         "-g",
     };
-    cpp_temp.addCSourceFile("src/main.cpp", &cflags);
+    cpp_binary.addCSourceFile("src/main.cpp", &cflags);
 
     // Extra include path
-    cpp_temp.addIncludePath("./src/utils");
+    cpp_binary.addIncludePath("./src/utils");
 
     // Link CPP
-    cpp_temp.linkLibCpp();
+    cpp_binary.linkLibCpp();
 
     // Library path
-    cpp_temp.addLibraryPath("./build");
+    cpp_binary.addLibraryPath("./build");
 
     // Link related libs
-    cpp_temp.linkSystemLibrary("a");
-    cpp_temp.linkSystemLibrary("b");
+    cpp_binary.linkSystemLibrary("a");
+    cpp_binary.linkSystemLibrary("b");
 
-    b.installArtifact(cpp_temp);
+    b.installArtifact(cpp_binary);
 
-    const run_cmd = b.addRunArtifact(cpp_temp);
+    const run_cmd = b.addRunArtifact(cpp_binary);
     run_cmd.step.dependOn(b.getInstallStep());
     if (b.args) |args| {
         run_cmd.addArgs(args);
@@ -50,18 +50,18 @@ pub fn build(b: *std.Build) void {
     run_step.dependOn(&run_cmd.step);
 
     // -----------------------------------------------------------------------
-    // `temp` zig binary
+    // Zig binary
     // -----------------------------------------------------------------------
-    const zig_temp = b.addExecutable(.{
-        .name = "zig_temp",
+    const zig_binary = b.addExecutable(.{
+        .name = "zig_binary",
         .root_source_file = .{ .path = "src/main.zig" },
         .target = target,
         .optimize = optimize,
     });
 
-    b.installArtifact(zig_temp);
+    b.installArtifact(zig_binary);
 
-    const zig_run_cmd = b.addRunArtifact(zig_temp);
+    const zig_run_cmd = b.addRunArtifact(zig_binary);
     zig_run_cmd.step.dependOn(b.getInstallStep());
     if (b.args) |args| {
         zig_run_cmd.addArgs(args);

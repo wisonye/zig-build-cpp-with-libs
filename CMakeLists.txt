@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION "3.22")
 
-project("cpp_temp")
+project("cpp")
 
 #
 # Generate `compile_commands.json` for `Neovim` LSP needed

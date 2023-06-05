@@ -1,2 +1,2 @@
 #!/bin/sh
-cd build; clear; make && ./cpp_temp; cd ..
+cd build; clear; make && ./cpp; cd ..

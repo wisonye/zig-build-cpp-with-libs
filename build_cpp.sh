@@ -5,4 +5,4 @@ clang++ \
 -I src/utils \
 -L build \
 -la -lb \
-src/main.cpp -o test
+src/main.cpp -o build/cpp_2
