@@ -18,7 +18,7 @@ The project has the following folder structure:
 └── src
      ├── main.cpp       # `C++` calls namespace functions in `liba.so` and `lib.so`
      ├── main.c         # `C` calls namespace functions in `liba.so` and `lib.so`
-     ├── main.zip       # `Zip` calls namespace functions in `liba.so` and `lib.so`
+     ├── main.zig       # `Zig` calls namespace functions in `liba.so` and `lib.so`
      └── utils          # Lib `a` and `b`
          ├── a.cpp
          ├── a.h
@@ -110,13 +110,49 @@ This only works once you build the project via `cmake`, as it doesn't build
 This only works once you build the project via `cmake`, as it doesn't build
 `liba.so` and `lib.so` but just links to them!!!
 
-```bash
-# Run CPP binary (pure C++ without zig)
-zig build run-cpp
+- Build and pure C++ binary without zig
 
-# Run ZIG binary (call C++ function in zig)
-zig build run-zig
-```
+    ```bash
+    zig build run-cpp
 
-</br>
+    # >>> Simple zig build CPP demo.
+    # >>> [ A - Result ] {
+    # {
+    #          invisible_value: 28
+    #          is_success: true
+    # }
+    # >>> A::Result destroyed.
+    # >>> [ B - Result ]
+    # {
+    #          invisible_float: 88.456
+    # }
+    # >>> B::Result destroyed.
+    ```
+
+    </br>
+
+- Build and run zig binary (call C++ function in zig)
+
+    ```bash
+    zig build run-zig
+
+    # >>> Calling C++ lib function in Zig:)
+    #
+    # >>> a_result value: 999
+    # >>> a_result is_success: true
+    # >>> [ A - Result ] {
+    # {
+    #          invisible_value: 999
+    #          is_success: true
+    # }
+    # >>> A::Result destroyed.
+    #
+    # >>> b_result value: 55.456>>> [ B - Result ]
+    # {
+    #          invisible_float: 55.456
+    # }
+    # >>> B::Result destroyed.
+    ```
+
+    </br>
 
