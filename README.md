@@ -29,10 +29,10 @@ The project has the following folder structure:
 
 </br>
 
-`CMake` builds the `liba.so` and `lib.so` first, then builds the `cpp_temp`
-and links it to the `build/liba.so`  and `build/libb.so`.
-
 ### Use `cmake` to build and run
+
+`cmake` builds the `build/liba.so` and `build/lib.so` first, then builds the
+`./build/cpp` and links it to the `build/liba.so`  and `build/libb.so`.
 
 ```bash
 ./configure.sh
